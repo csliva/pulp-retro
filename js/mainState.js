@@ -153,6 +153,22 @@ var mainState = {
         // Camera type 
         game.camera.follow(this.player, Phaser.Camera.FOLLOW_PLATFORMER);
 
+        //emitter for dust
+        this.emitter = game.add.emitter(0, 0, 500);
+        var pixel = game.add.bitmapData(2, 2);
+        pixel.context.fillStyle = "#666"
+        pixel.context.fillRect(0, 0, 32, 32);
+        game.cache.addBitmapData('dust', pixel);
+        this.player.addChild(this.emitter);
+        this.emitter.y = 10;
+        this.emitter.x = 0;
+        this.emitter.makeParticles(pixel);
+  
+        // setup options for the emitter
+        this.emitter.lifespan = 200;
+        this.emitter.maxParticleSpeed = new Phaser.Point(-100,50);
+        this.emitter.minParticleSpeed = new Phaser.Point(-200,-50);
+
     },
     update: function(){
         //////////////////////////
