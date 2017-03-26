@@ -5,22 +5,19 @@ player = {
     keys: function(that){
         if (that.cursor.left.isDown) {
             that.player.body.velocity.x = -200;
+            that.player.animations.play('walk', 30, true);
+            that.player.scale.x = -1;
         } else if (that.cursor.right.isDown) {
             that.player.body.velocity.x = 200;
+            that.player.animations.play('walk', 30, true);
+            that.player.scale.x = 1;
         } else {
-           that.player.body.velocity.x = 0; 
+           that.player.body.velocity.x = 0;
+           that.player.animations.stop(null, true);
         }
         // Make the player jump if he is touching the ground
         if (that.cursor.up.isDown && that.player.body.touching.down) {
-           that.player.body.velocity.y = -450; 
-        }
-        //Add a sprint
-        if (that.powerKey.isDown && that.cursor.left.isDown){ 
-            that.player.body.velocity.y = 0;
-            that.player.body.velocity.x = -300; 
-        }
-        else if (that.powerKey.isDown && that.cursor.right.isDown){ 
-            that.player.body.velocity.x = 300;
+           that.player.body.velocity.y = -450;
         }
     },
     collision: function(that){

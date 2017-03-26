@@ -4,18 +4,14 @@
 var mainState = {
     preload: function(){
         var theme = 'theme0';
-        game.load.image('player', 'assets/'+theme+'-player.png');
+        //game.load.image('player', 'assets/'+theme+'-player.png');
+        game.load.spritesheet('player', 'assets/spritesheet1.png', 8, 15, 5);
+
         game.load.image('wall', 'assets/'+theme+'-wall.png');
         game.load.image('coin', 'assets/'+theme+'-coin-c.png');
         game.load.image('lava', 'assets/'+theme+'-lava.png');
         game.load.image('enemy', 'assets/'+theme+'-enemy.png'); 
         game.load.image('water', 'assets/'+theme+'-water.png');
-        game.load.image('floor-center', 'assets/floor-center.png');
-        game.load.image('floor-left', 'assets/floor-left-edge.png');
-        game.load.image('floor-right', 'assets/floor-right-edge.png');
-        game.load.image('floor-single', 'assets/floor-single.png');
-        game.load.image('floor-single-down', 'assets/floor-single-down.png');
-        game.load.image('floor-single-bottom', 'assets/floor-single-bottom.png');
         game.load.image('button-restart', 'assets/button-restart.png');
         
     },
@@ -51,6 +47,7 @@ var mainState = {
 
         // Create the player in the middle of the game
         this.player = game.add.sprite(70, 100, 'player');
+        var walk = this.player.animations.add('walk');
         //resize player
         // Add gravity to make it fall
         this.player.body.gravity.y = 1200;
@@ -78,9 +75,9 @@ var mainState = {
             '!                                              xxxxxxxxxxx',
             '!      !               ?       *                 ?      xx',
             'x      !  *   ?         xxxxxxxxxxxxxxxxxxxxxxxxx      xxx',
-            'x      abbc!!d          xxx                             xx',
-            'x            e          !xx   ?  *    ?                 xx',
-            'xabbc        fbbbbbc o  !xx    xxxxxxx   *       ?      xx',
+            'x      xxxx!!x          xxx                             xx',
+            'x            x          !xx   ?  *    ?                 xx',
+            'xxxxx        xxxxxxx o  !xx    xxxxxxx   *       ?      xx',
             '!         !             !xx         xxxxxxxxxxxxx       xx',
             '!         !     o      x!xxx o                           x',
             '! o                     !xx  *     ?                xxxxxx',
@@ -101,41 +98,6 @@ var mainState = {
                 // Create a wall and add it to the 'walls' group
                 if (level[i][j] == 'x') {
                     var wall = game.add.sprite(24*j, 24*i, 'wall');
-                    this.walls.add(wall);
-                    wall.body.immovable = true; 
-                }
-
-                else if (level[i][j] == 'a') {
-                    var wall = game.add.sprite(24*j, 24*i, 'floor-left');
-                    wall.body.setSize(24, 24, 0,1);
-                    this.walls.add(wall);
-                    wall.body.immovable = true; 
-                }
-                 else if (level[i][j] == 'b') {
-                    var wall = game.add.sprite(24*j, 24*i, 'floor-center');
-                    wall.body.setSize(24, 24, 0,1);
-                    this.walls.add(wall);
-                    wall.body.immovable = true; 
-                }
-                 else if (level[i][j] == 'c') {
-                    var wall = game.add.sprite(24*j, 24*i, 'floor-right');
-                    wall.body.setSize(24, 24, 0,1);
-                    this.walls.add(wall);
-                    wall.body.immovable = true; 
-                }
-                 else if (level[i][j] == 'd') {
-                    var wall = game.add.sprite(24*j, 24*i, 'floor-single');
-                    wall.body.setSize(24, 24, 0,1);
-                    this.walls.add(wall);
-                    wall.body.immovable = true; 
-                }
-                else if (level[i][j] == 'e') {
-                    var wall = game.add.sprite(24*j, 24*i, 'floor-single-down');
-                    this.walls.add(wall);
-                    wall.body.immovable = true; 
-                }
-                else if (level[i][j] == 'f') {
-                    var wall = game.add.sprite(24*j, 24*i, 'floor-single-bottom');
                     this.walls.add(wall);
                     wall.body.immovable = true; 
                 }
@@ -202,6 +164,7 @@ var mainState = {
 
         // collision handling functions
         player.collision(that);
+        that.player.animations.play('walk', 10, true);
         // Move the player when an arrow key is pressed
         player.keys(that);
 
